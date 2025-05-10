@@ -1,0 +1,127 @@
+.travelGroupsSection {
+    padding: 4rem 2rem;
+    background-color: #f9f9f9;
+    text-align: left;
+  }
+  
+  .header {
+    text-align: left;
+    margin-bottom: 2rem;
+  }
+  
+  .header h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #1a1a1a;
+    position: relative;
+    display: inline-block;
+  }
+  
+  .header h2::after {
+    content: '';
+    display: block;
+    width: 250px;
+    height: 2px;
+    background-color: #ff7750;
+    margin-top: 0.5rem;
+  }
+  
+  .header p {
+    font-size: 1rem;
+    color: #555;
+    margin-top: 0.5rem;
+  }
+  
+  .carousel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  
+  .cardTrack {
+    display: flex;
+    gap: 1.5rem;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 0.5rem;
+    scrollbar-width: none; /* Firefox */
+  }
+  
+  .cardTrack::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
+  }
+  
+  .card {
+    min-width: 280px;
+    max-width: 300px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.06);
+    padding: 1rem;
+    flex-shrink: 0;
+    text-align: left;
+  }
+  
+  .card h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+    color: #222;
+  }
+  
+  .card .name {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 0.75rem;
+  }
+  
+  .stats p {
+    font-size: 0.85rem;
+    color: #333;
+    margin: 0.25rem 0;
+  }
+  
+  .arrowLeft,
+  .arrowRight {
+    background: #ff7750;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 0.5rem 0.75rem;
+    font-size: 1rem;
+    cursor: pointer;
+    margin: 0 0.5rem;
+    transition: background 0.3s ease;
+  }
+  
+  .arrowLeft:hover,
+  .arrowRight:hover {
+    background: #e05a3c;
+  }
+  
+  @media (max-width: 768px) {
+    .header h2 {
+      font-size: 1.5rem;
+    }
+  
+    .header p {
+      font-size: 0.95rem;
+    }
+  
+    .carousel {
+      flex-direction: row;
+    }
+  
+    .card {
+      min-width: 260px;
+      max-width: 260px;
+    }
+  
+    .arrowLeft,
+    .arrowRight {
+      padding: 0.4rem 0.6rem;
+      font-size: 0.9rem;
+    }
+  }
+  
