@@ -8,6 +8,7 @@ import travGroup from '@/styles/TopTravelGroups.module.css';
 import { useState, useEffect, useRef } from 'react';
 import { FaUsers, FaCalendarAlt, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import Footer from '@/components/Footer';
+import SearchBar from '@/components/Searchbar';
 
 export default function Home() {
   const destinations = [
@@ -168,6 +169,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      <SearchBar/>
       
       <section className={overviewStyles.overviewSection}>
         <div className={overviewStyles.overviewContainer}>
