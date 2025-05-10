@@ -3,7 +3,7 @@
   top: 0;
   left: 0;
   width: 100%;
-  background-color: white;
+  background-color:#0da591ef;
   padding: 20px 50px;
   display: flex;
   justify-content: space-between;
@@ -16,6 +16,9 @@
   font-size: 24px;
   font-weight: bold;
   color: #333;
+  display: flex;
+  align-items: center;
+  height: 40px; 
 }
 
 .navLinks {
@@ -27,18 +30,18 @@
 
 .link {
   font-size: 16px;
-  color: #444;
+  color: #000000;
   cursor: pointer;
   padding-bottom: 4px;
   transition: border-color 0.3s;
 }
 
 .link:hover {
-  color: #f1af0b;
+  color: #ffffff;
 }
 
 .active {
-  border-bottom: 2px solid #f1af0b;
+  border-bottom: 2px solid #e7962d;
 }
 
 /* --- Responsive Menu --- */

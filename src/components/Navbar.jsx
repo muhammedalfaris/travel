@@ -2,13 +2,21 @@
 import styles from '../styles/Navbar.module.css';
 import { useState } from 'react';
 import { FaBars, FaTimes } from 'react-icons/fa';
-
+import Image from 'next/image';
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
     <nav className={styles.navbar}>
-      <div className={styles.logo}>TravelDusk</div>
+      <div className={styles.logo}>
+        <Image 
+          src="/images/tdlogo.png" 
+          alt="TravelDusk Logo" 
+          width={120}  
+          height={60} 
+          className={styles.logoImage}
+        />
+      </div>
 
       <ul className={`${styles.navLinks} ${menuOpen ? styles.showMenu : ''}`}>
         <li className={`${styles.link} ${styles.active}`}>Home</li>

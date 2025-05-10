@@ -7,6 +7,7 @@ import instaStyles from '@/styles/InstaSection.module.css';
 import travGroup from '@/styles/TopTravelGroups.module.css';
 import { useState, useEffect, useRef } from 'react';
 import { FaUsers, FaCalendarAlt, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import Footer from '@/components/Footer';
 
 export default function Home() {
   const destinations = [
@@ -260,6 +261,7 @@ export default function Home() {
           </button>
         </div>
       </section>
+      <Footer/>
     </>
   );
 }
