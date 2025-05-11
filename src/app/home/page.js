@@ -5,6 +5,7 @@ import styles from '@/styles/HeroSection.module.css';
 import overviewStyles from '@/styles/Overview.module.css';
 import instaStyles from '@/styles/InstaSection.module.css';
 import travGroup from '@/styles/TopTravelGroups.module.css';
+import mustDest from '@/styles/MustDest.module.css';
 import { useState, useEffect, useRef } from 'react';
 import { FaUsers, FaCalendarAlt, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import Footer from '@/components/Footer';
@@ -259,6 +260,74 @@ export default function Home() {
               travelGroupsRef.current.scrollBy({ left: 300, behavior: 'smooth' });
             }
           }}>
+            <FaChevronRight />
+          </button>
+        </div>
+      </section>
+      <section className={mustDest.travelGroupsSection}>
+        <div className={mustDest.header}>
+          <h2>Must Visit Destinations</h2>
+          <p>Dreamy spots you won't want to miss this weekend.</p>
+        </div>
+        
+        <div className={mustDest.carousel}>
+          <button 
+            className={mustDest.arrowLeft} 
+            onClick={() => {
+              const mustDestRef = document.querySelector(`.${mustDest.cardTrack}`);
+              if (mustDestRef) {
+                mustDestRef.scrollBy({ left: -300, behavior: 'smooth' });
+              }
+            }}
+          >
+            <FaChevronLeft />
+          </button>
+          
+          <div className={mustDest.cardTrack}>
+            {[
+              { name: 'Gokarna', trips: 29, groups: 15, locations: ['Hyderabad', 'Bangalore'], hasMore: true },
+              { name: 'Coorg', trips: 25, groups: 13, locations: ['Chennai', 'Hyderabad'], hasMore: true },
+              { name: 'Rishikesh', trips: 32, groups: 18, locations: ['Delhi', 'Mumbai'], hasMore: true },
+              { name: 'Munnar', trips: 21, groups: 11, locations: ['Kochi', 'Chennai'], hasMore: true },
+              { name: 'Leh Ladakh', trips: 35, groups: 19, locations: ['Delhi', 'Chandigarh'], hasMore: true }
+            ].map((destination, index) => (
+              <div className={mustDest.card} key={index}>
+                <div className={mustDest.cardHeader}>
+                  <h3>{destination.name}</h3>
+                  <div className={mustDest.stats}>
+                    <div className={mustDest.statItem}>
+                      <span className={mustDest.statIcon}><FaCalendarAlt /></span>
+                      <span className={mustDest.statValue}>{destination.trips}</span>
+                      <span className={mustDest.statLabel}>Trips</span>
+                    </div>
+                    <div className={mustDest.statItem}>
+                      <span className={mustDest.statIcon}><FaUsers /></span>
+                      <span className={mustDest.statValue}>{destination.groups}</span>
+                      <span className={mustDest.statLabel}>Groups</span>
+                    </div>
+                  </div>
+                </div>
+                <div className={mustDest.locations}>
+                  {destination.locations.map((location, i) => (
+                    <span key={i} className={mustDest.locationTag}>{location}</span>
+                  ))}
+                  {destination.hasMore && (
+                    <span className={mustDest.moreTag}>+{destination.locations.length - 1}</span>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+          
+          <button 
+            className={mustDest.arrowRight} 
+            onClick={() => {
+              const mustDestRef = document.querySelector(`.${mustDest.cardTrack}`);
+              if (mustDestRef) {
+                mustDestRef.scrollBy({ left: 300, behavior: 'smooth' });
+              }
+            }}
+          >
             <FaChevronRight />
           </button>
         </div>
