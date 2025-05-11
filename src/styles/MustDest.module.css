@@ -23,7 +23,7 @@
     display: block;
     width: 250px;
     height: 2px;
-    background-color: #ff7750;
+    background-color: #0da590;
     margin-top: 0.5rem;
   }
   
@@ -32,6 +32,30 @@
     color: #555;
     margin-top: 0.5rem;
   }
+    .headerContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+}
+
+  .viewMoreBtn {
+  background-color: transparent;
+  color: #0da590;
+  border: 2px solid #0da590;
+  padding: 0.5rem 1.2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.viewMoreBtn:hover {
+  background-color: #0da590;
+  color: white;
+  transform: translateY(-2px);
+}
   .carousel {
   display: flex;
   align-items: center;
@@ -97,7 +121,7 @@
 }
 
 .statIcon {
-  color: #ff7750;
+  color: #0da590;
   font-size: 1rem;
 }
 
@@ -128,7 +152,7 @@
 }
 
 .moreTag {
-  background: #ff7750;
+  background: #0da590;
   color: white;
   font-size: 0.85rem;
   padding: 0.3rem 0.8rem;
@@ -138,8 +162,8 @@
 
 .arrowLeft,
 .arrowRight {
-  background: #ff7750;
-  color: white;
+  background: none;
+  color: #0da590;
   border: none;
   border-radius: 8px;
   padding: 0.6rem 0.8rem;
@@ -152,7 +176,7 @@
 
 .arrowLeft:hover,
 .arrowRight:hover {
-  background: #e05a3c;
+  background: white;
   transform: scale(1.05);
 }
 

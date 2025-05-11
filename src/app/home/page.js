@@ -6,6 +6,7 @@ import overviewStyles from '@/styles/Overview.module.css';
 import instaStyles from '@/styles/InstaSection.module.css';
 import travGroup from '@/styles/TopTravelGroups.module.css';
 import mustDest from '@/styles/MustDest.module.css';
+import topTrip from '@/styles/TopTrips.module.css';
 import { useState, useEffect, useRef } from 'react';
 import { FaUsers, FaCalendarAlt, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import Footer from '@/components/Footer';
@@ -78,6 +79,27 @@ export default function Home() {
       following: '191',
       posts: '2,401',
     },
+    {
+      handle: '@trekhieversofficial',
+      name: 'Trekhievers - Your Adventure Mate',
+      followers: '65K',
+      following: '191',
+      posts: '2,401',
+    },
+    {
+      handle: '@trekhieversofficial',
+      name: 'Trekhievers - Your Adventure Mate',
+      followers: '65K',
+      following: '191',
+      posts: '2,401',
+    },
+    {
+      handle: '@trekhieversofficial',
+      name: 'Trekhievers - Your Adventure Mate',
+      followers: '65K',
+      following: '191',
+      posts: '2,401',
+    },
   ];
 
   const travelGroups = [
@@ -85,37 +107,31 @@ export default function Home() {
       name: 'BanBanjara',
       location: 'Bangalore',
       trips: '195 Trips',
-      image: '/images/travel-group-1.jpg',
+      image: '/images/banglore.png',
     },
     {
       name: 'Bhatakna Tours and Travels',
       location: 'Multiple locations',
       trips: '157 Trips',
-      image: '/images/travel-group-2.jpg',
+      image: '/images/multiloc.png',
     },
     {
       name: 'EnLive Trip Experiences',
       location: 'Delhi',
       trips: '61 Trips',
-      image: '/images/travel-group-3.jpg',
+      image: '/images/delhi.png',
     },
     {
       name: 'Bangalore Mountaineering',
       location: 'Bangalore',
       trips: '43 Trips',
-      image: '/images/travel-group-4.jpg',
+      image: '/images/banglore.png',
     },
     {
-      name: 'Bangalore Mountaineering',
-      location: 'Bangalore',
-      trips: '43 Trips',
-      image: '/images/travel-group-4.jpg',
-    },
-    {
-      name: 'Bangalore Mountaineering',
-      location: 'Bangalore',
-      trips: '43 Trips',
-      image: '/images/travel-group-4.jpg',
+      name: 'Bhatakna Tours and Travels',
+      location: 'Multiple locations',
+      trips: '157 Trips',
+      image: '/images/multiloc.png',
     },
   ];
 
@@ -131,7 +147,6 @@ export default function Home() {
             <p className={styles.description}>
               This text presents my research journey on the topic of Music and Tourism Imaginaries and gives the context...
             </p>
-            <button className={styles.button}>See More</button>
           </div>
 
           <div className={styles.cardWrapper}>
@@ -196,9 +211,12 @@ export default function Home() {
       </section>
       
       <section className={instaStyles.travelGroupsSection}>
-        <div className={instaStyles.header}>
-          <h2>Instagram Travel Groups</h2>
-          <p>Here some awesome travel accounts to inspire your next trip</p>
+        <div className={instaStyles.headerContainer}>
+          <div className={instaStyles.header}>
+            <h2>Instagram Travel Groups</h2>
+            <p>Discover top travel groups from Instagram for your next getaway</p>
+          </div>
+          <button className={instaStyles.viewMoreBtn}>View More</button>
         </div>
 
         <div className={instaStyles.carousel}>
@@ -227,9 +245,12 @@ export default function Home() {
       </section>
       
       <section className={travGroup.travelGroupsSection}>
-        <div className={travGroup.header}>
-          <h2>Top Travel Groups</h2>
-          <p>Here some awesome travel groups to inspire your next trip</p>
+        <div className={travGroup.headerContainer}>
+          <button className={travGroup.viewMoreBtn}>View More</button>
+          <div className={travGroup.header}>
+            <h2>Top Travel Groups</h2>
+            <p>Join the best groups for weekend adventures.</p>
+          </div>
         </div>
 
         <div className={travGroup.carousel}>
@@ -265,9 +286,12 @@ export default function Home() {
         </div>
       </section>
       <section className={mustDest.travelGroupsSection}>
-        <div className={mustDest.header}>
-          <h2>Must Visit Destinations</h2>
-          <p>Dreamy spots you won't want to miss this weekend.</p>
+        <div className={mustDest.headerContainer}>
+          <div className={mustDest.header}>
+            <h2>Must Visit Destinations</h2>
+            <p>Dreamy spots you won’t want to miss this weekend</p>
+          </div>
+          <button className={mustDest.viewMoreBtn}>View More</button>
         </div>
         
         <div className={mustDest.carousel}>
@@ -325,6 +349,125 @@ export default function Home() {
               const mustDestRef = document.querySelector(`.${mustDest.cardTrack}`);
               if (mustDestRef) {
                 mustDestRef.scrollBy({ left: 300, behavior: 'smooth' });
+              }
+            }}
+          >
+            <FaChevronRight />
+          </button>
+        </div>
+      </section>
+      <section className={topTrip.travelGroupsSection}>
+        <div className={topTrip.headerContainer}>
+          <button className={topTrip.viewMoreBtn}>View More</button>
+          <div className={topTrip.header}>
+            <h2>Top Weekend Trips</h2>
+            <p>Unmissable trips to make your weekend epic.</p>
+          </div>
+        </div>
+        
+        <div className={topTrip.carousel}>
+          <button 
+            className={topTrip.arrowLeft} 
+            onClick={() => {
+              const topTripRef = document.querySelector(`.${topTrip.cardTrack}`);
+              if (topTripRef) {
+                topTripRef.scrollBy({ left: -300, behavior: 'smooth' });
+              }
+            }}
+          >
+            <FaChevronLeft />
+          </button>
+          
+          <div className={topTrip.cardTrack}>
+            {[
+              { 
+                name: 'Kodachadri Trek Shivamogga From...',
+                image: '/images/kodachadri.png',
+                price: 4236,
+                duration: '2 days 1 night',
+                location: 'Bangalore',
+                organizer: 'Namma Trip',
+                discount: null
+              },
+              { 
+                name: 'Nandi Hills Sunrise Trek',
+                image: '/images/nandi.png',
+                price: 349,
+                originalPrice: 498,
+                discount: '30% OFF',
+                duration: '1 day',
+                location: 'Bangalore',
+                organizer: 'escape2explore'
+              },
+              { 
+                name: 'Kumara Parvatha Trek',
+                image: '/images/kumara.png',
+                price: 2999,
+                originalPrice: 3500,
+                discount: '15% OFF',
+                duration: '2 days',
+                location: 'Mangalore',
+                organizer: 'TrekBuddy'
+              },
+              { 
+                name: 'Coorg Coffee Estate Tour',
+                image: '/images/coorg.png',
+                price: 1899,
+                duration: '1 day',
+                location: 'Coorg',
+                organizer: 'Nature Walks',
+                discount: null
+              },
+              { 
+                name: 'Gokarna Beach Trek',
+                image: '/images/gokarna.png',
+                price: 2499,
+                originalPrice: 2999,
+                discount: '17% OFF',
+                duration: '2 days 1 night',
+                location: 'Gokarna',
+                organizer: 'BeachTreks'
+              }
+            ].map((trip, index) => (
+              <div className={topTrip.card} key={index}>
+                <div className={topTrip.cardImage} style={{ backgroundImage: `url(${trip.image})` }}>
+                  {trip.discount && <span className={topTrip.discountTag}>{trip.discount}</span>}
+                </div>
+                <div className={topTrip.cardContent}>
+                  <h3 className={topTrip.tripName}>{trip.name}</h3>
+                  
+                  <div className={topTrip.pricing}>
+                    <span className={topTrip.currentPrice}>₹ {trip.price}</span>
+                    {trip.originalPrice && <span className={topTrip.originalPrice}>₹ {trip.originalPrice}</span>}
+                  </div>
+                  
+                  <div className={topTrip.tripInfo}>
+                    <div className={topTrip.infoItem}>
+                      <span className={topTrip.infoIcon}>⏱️</span>
+                      <span className={topTrip.infoText}>{trip.duration}</span>
+                    </div>
+                    
+                    <div className={topTrip.infoItem}>
+                      <span className={topTrip.infoIcon}>📍</span>
+                      <span className={topTrip.infoText}>{trip.location}</span>
+                    </div>
+                    
+                    <div className={topTrip.infoItem}>
+                      <span className={topTrip.infoIcon}>👤</span>
+                      <span className={topTrip.infoText}>{trip.organizer}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          
+          <button 
+            className={topTrip.arrowRight} 
+            onClick={() => {
+              const topTripRef = document.querySelector(`.${topTrip.cardTrack}`);
+              if (topTripRef) {
+                topTripRef.scrollBy({ left: 300, behavior: 'smooth' });
               }
             }}
           >

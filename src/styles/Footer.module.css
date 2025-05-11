@@ -60,7 +60,7 @@
 }
 
 .subscribeBtn {
-  background-color: #FF7757;
+  background-color: #0da590;
   color: white;
   padding: 0.75rem 1.5rem;
   border: none;
@@ -72,7 +72,7 @@
 }
 
 .subscribeBtn:hover {
-  background-color: #e86a4d;
+  background-color: #186258;
 }
 
 /* Main Footer Styles */
