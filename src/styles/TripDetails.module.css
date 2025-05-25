@@ -1,0 +1,708 @@
+.container {
+  max-width: 100%;
+  margin: 0 auto;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Hero Section */
+.heroSection {
+  display: flex;
+  height: 500px;
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+.heroMainImage {
+  flex: 2;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  border-radius: 8px 0 0 8px;
+  overflow: hidden;
+}
+
+.heroSideImages {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.sideImage {
+  flex: 1;
+  background-size: cover;
+  background-position: center;
+}
+
+.sideImage:first-child {
+  border-radius: 0 8px 0 0;
+  margin-bottom: 0px;
+}
+
+.sideImage:last-child {
+  border-radius: 0 0 8px 0;
+  margin-top: 0px;
+}
+
+.breadcrumbs {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 8px 16px;
+  border-radius: 30px;
+  font-size: 14px;
+  z-index: 2;
+}
+
+.breadcrumbs a {
+  color: #555;
+  text-decoration: none;
+}
+
+.breadcrumbs a:hover {
+  text-decoration: underline;
+  color: #0da590;
+}
+
+/* Trip Header */
+.tripHeader {
+  padding: 0 1rem;
+  margin-bottom: 2rem;
+}
+
+.tripMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.locationContainer {
+  display: flex;
+  align-items: center;
+  color: #555;
+  font-size: 16px;
+}
+
+.locationIcon {
+  color: #0da590;
+  margin-right: 8px;
+}
+
+.ratingContainer {
+  display: flex;
+  align-items: center;
+}
+
+.stars {
+  display: flex;
+  margin-right: 8px;
+}
+
+.star {
+  color: #FFC107;
+  margin-right: 2px;
+}
+
+.ratingText {
+  color: #555;
+  font-size: 14px;
+}
+
+.tripTitle {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #333;
+  margin: 0;
+}
+
+/* Main Content Layout */
+.mainContent {
+  display: flex;
+  gap: 2rem;
+  padding: 0 1rem;
+}
+
+.contentLeft {
+  flex: 3;
+}
+
+.sidebar {
+  flex: 1;
+}
+
+/* Trip Details */
+.tripDetails {
+  margin-bottom: 2rem;
+}
+
+.infoGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.infoCard {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.infoIcon {
+  width: 40px;
+  height: 40px;
+  background-color: #f2f7ff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+  color: #0066cc;
+  font-size: 18px;
+}
+
+.ageIcon, .taxIcon {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.infoContent {
+  flex: 1;
+}
+
+.infoLabel {
+  color: #666;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+.infoValue {
+  font-weight: 600;
+  color: #333;
+}
+
+/* Section Styles */
+.sectionTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.descriptionSection, .highlightsSection, .includesSection, .comparisonSection {
+  margin-bottom: 2.5rem;
+}
+
+.description {
+  color: #555;
+  line-height: 1.6;
+}
+
+.highlightsList {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.highlightItem {
+  padding: 10px 0;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.highlightItem:before {
+  content: "•";
+  color: #0da590;
+  font-weight: bold;
+  margin-right: 10px;
+  font-size: 18px;
+}
+
+/* Inclusions/Exclusions */
+.columnGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.columnTitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.includesList {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.includesItem, .excludesItem {
+  padding: 8px 0;
+  display: flex;
+  align-items: center;
+}
+
+.includeIcon {
+  color: #4CAF50;
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.excludeIcon {
+  color: #f44336;
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+/* Comparison Section */
+.comparisonIntro {
+  color: #555;
+  margin-bottom: 1.5rem;
+}
+
+.tabButtons {
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+.tabButton {
+  padding: 10px 20px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid #ddd;
+  cursor: pointer;
+  font-size: 16px;
+  color: #666;
+  transition: all 0.3s;
+}
+
+.activeTab {
+  color: #0da590;
+  border-bottom: 2px solid #0da590;
+  font-weight: 600;
+}
+
+/* Table View */
+.comparisonTable {
+  overflow-x: auto;
+  margin-bottom: 2rem;
+}
+
+.comparisonTable table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.comparisonTable th {
+  background-color: #f7f7f7;
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  color: #333;
+  border-bottom: 2px solid #ddd;
+}
+
+.comparisonTable td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  color: #555;
+}
+
+.highlightedRow {
+  background-color: #fff8e1;
+}
+
+.priceCell {
+  display: flex;
+  flex-direction: column;
+}
+
+.featuresList {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.featuresList li {
+  margin-bottom: 4px;
+}
+
+.featuresList li:before {
+  content: "✓";
+  color: #4CAF50;
+  margin-right: 5px;
+}
+
+/* Card View */
+.comparisonCards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.comparisonCard {
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  border: 1px solid #eee;
+}
+
+.highlightedCard {
+  border: 2px solid #0da590;
+  box-shadow: 0 4px 12px rgba(255, 152, 0, 0.15);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.cardHeader h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.recommendedBadge {
+  background-color: #0da590;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.comparisonCard h4 {
+  margin: 0 0 0.5rem 0;
+  color: #555;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.cardPrice {
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.cardDetails {
+  margin-bottom: 1rem;
+}
+
+.cardDetail {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.detailLabel {
+  color: #666;
+  font-size: 14px;
+}
+
+.detailValue {
+  font-weight: 500;
+  color: #333;
+}
+
+.cardFeatures {
+  margin-top: 1rem;
+}
+
+.featuresLabel {
+  font-weight: 600;
+  color: #333;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.cardFeatures ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.cardFeatures li {
+  padding: 4px 0;
+  color: #555;
+  display: flex;
+  align-items: center;
+}
+
+.cardFeatures li:before {
+  content: "✓";
+  color: #4CAF50;
+  margin-right: 8px;
+}
+
+.selectButton {
+  margin-top: 1rem;
+  width: 100%;
+  padding: 10px;
+  background-color: #0da590;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.selectButton:hover {
+  background-color: #117265;
+}
+
+/* Price Card */
+.priceCard {
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  background-color: white;
+  margin-bottom: 1.5rem;
+}
+
+.priceHeader {
+  margin-bottom: 1.5rem;
+}
+
+.startingFrom {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.strikePrice {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.priceDisplay {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.currentPrice {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #0da590;
+  margin-right: 10px;
+}
+
+.discountTag {
+  background-color: #00c52e;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.perPerson {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.taxNote {
+  font-size: 12px;
+  color: #999;
+}
+
+.bookButton {
+  width: 100%;
+  padding: 12px;
+  background-color: #0da590;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-bottom: 1rem;
+}
+
+.bookButton:hover {
+  background-color: #0f6f62;
+}
+
+.organizerInfo {
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+}
+
+.organizer {
+  display: flex;
+  flex-direction: column;
+}
+
+.organizerLabel {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.organizerName {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Help Card */
+.helpCard {
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  background-color: #f9f9f9;
+}
+
+.helpCard h3 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.helpCard p {
+  color: #666;
+  margin-bottom: 1rem;
+  font-size: 14px;
+}
+
+.contactButton {
+  width: 100%;
+  padding: 10px;
+  background-color: #0066cc;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.contactButton:hover {
+  background-color: #0056b3;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .infoGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 992px) {
+  .mainContent {
+    flex-direction: column;
+  }
+  
+  .contentLeft {
+    order: 2;
+  }
+  
+  .sidebar {
+    order: 1;
+    margin-bottom: 2rem;
+  }
+  
+  .columnGrid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .heroSection {
+    flex-direction: column;
+    height: auto;
+  }
+  
+  .heroMainImage {
+    height: 300px;
+    border-radius: 8px 8px 0 0;
+  }
+  
+  .heroSideImages {
+    flex-direction: row;
+    height: 150px;
+  }
+  
+  .sideImage:first-child {
+    border-radius: 0 0 0 8px;
+    margin-bottom: 0;
+    margin-right: 4px;
+  }
+  
+  .sideImage:last-child {
+    border-radius: 0 0 8px 0;
+    margin-top: 0;
+    margin-left: 4px;
+  }
+  
+  .tripTitle {
+    font-size: 2rem;
+  }
+  
+  .comparisonTable {
+    font-size: 13px;
+  }
+  
+  .tabButton {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+}
+
+@media (max-width: 576px) {
+  .heroSection {
+    height: auto;
+  }
+  
+  .heroMainImage {
+    height: 250px;
+  }
+  
+  .heroSideImages {
+    height: 100px;
+  }
+  
+  .tripMeta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .tripTitle {
+    font-size: 1.5rem;
+  }
+  
+  .infoGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .comparisonCards {
+    grid-template-columns: 1fr;
+  }
+  
+  .comparisonTable th, .comparisonTable td {
+    padding: 8px;
+  }
+  
+  .currentPrice {
+    font-size: 1.5rem;
+  }
+}

@@ -8,9 +8,10 @@ import travGroup from '@/styles/TopTravelGroups.module.css';
 import mustDest from '@/styles/MustDest.module.css';
 import topTrip from '@/styles/TopTrips.module.css';
 import { useState, useEffect, useRef } from 'react';
-import { FaUsers, FaCalendarAlt, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { FaUsers, FaCalendarAlt, FaChevronLeft, FaChevronRight, FaWhatsapp } from 'react-icons/fa';
 import Footer from '@/components/Footer';
 import SearchBar from '@/components/Searchbar';
+import Link from 'next/link';
 
 export default function Home() {
   const destinations = [
@@ -102,39 +103,6 @@ export default function Home() {
     },
   ];
 
-  const travelGroups = [
-    {
-      name: 'BanBanjara',
-      location: 'Bangalore',
-      trips: '195 Trips',
-      image: '/images/banglore.png',
-    },
-    {
-      name: 'Bhatakna Tours and Travels',
-      location: 'Multiple locations',
-      trips: '157 Trips',
-      image: '/images/multiloc.png',
-    },
-    {
-      name: 'EnLive Trip Experiences',
-      location: 'Delhi',
-      trips: '61 Trips',
-      image: '/images/delhi.png',
-    },
-    {
-      name: 'Bangalore Mountaineering',
-      location: 'Bangalore',
-      trips: '43 Trips',
-      image: '/images/banglore.png',
-    },
-    {
-      name: 'Bhatakna Tours and Travels',
-      location: 'Multiple locations',
-      trips: '157 Trips',
-      image: '/images/multiloc.png',
-    },
-  ];
-
   return (
     <>
       <Navbar />
@@ -143,45 +111,58 @@ export default function Home() {
 
         <div className={styles.content}>
           <div className={styles.textBox}>
-            <h1 className={styles.title}>World Tours</h1>
+            <h1 className={styles.title}>Explore Together</h1>
             <p className={styles.description}>
-              This text presents my research journey on the topic of Music and Tourism Imaginaries and gives the context...
+              Your Pocket-Friendly Travel Dost.
+              Discover the Cheapest Group Trips in India with Verified Travel Partners Only.
             </p>
+            <p>Connect with us</p>
+            <a 
+              href="#" 
+              aria-label="Whatsapp" 
+              style={{fontSize:"40px", marginTop:"30px"}}
+              onClick={() => window.open(`https://wa.me/919030263255`, '_blank')}
+            >
+              <FaWhatsapp />
+            </a>   
           </div>
 
-          <div className={styles.cardWrapper}>
-            <button
-              className={styles.arrowBtn}
-              onClick={() => setStartIndex(i => Math.max(0, i - 1))}
-              disabled={startIndex === 0}
-            >
-              <FaChevronLeft />
-            </button>
+          <div className={styles.destinationsSection}>
+            <h2 className={styles.destinationsHeading}>Destinations</h2>
+            <div className={styles.cardWrapper}>
+              <button
+                className={styles.arrowBtn}
+                onClick={() => setStartIndex(i => Math.max(0, i - 1))}
+                disabled={startIndex === 0}
+              >
+                <FaChevronLeft />
+              </button>
 
-            <div className={styles.cards}>
-              {visibleCards.map((dest, i) => (
-                <div
-                  key={i}
-                  className={styles.card}
-                  onClick={() => setBgImage(dest.image)}
-                  style={{ backgroundImage: `url(${dest.image})` }}
-                >
-                  <div className={styles.cardOverlay}>
-                    <h3>{dest.name}</h3>
-                    <p><FaUsers /> {dest.groups} Groups</p>
-                    <p><FaCalendarAlt /> {dest.trips} Trips</p>
+              <div className={styles.cards}>
+                {visibleCards.map((dest, i) => (
+                  <div
+                    key={i}
+                    className={styles.card}
+                    onClick={() => setBgImage(dest.image)}
+                    style={{ backgroundImage: `url(${dest.image})` }}
+                  >
+                    <div className={styles.cardOverlay}>
+                      <h3>{dest.name}</h3>
+                      <p><FaUsers /> {dest.groups} Groups</p>
+                      <p><FaCalendarAlt /> {dest.trips} Trips</p>
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
 
-            <button
-              className={styles.arrowBtn}
-              onClick={() => setStartIndex(i => Math.min(i + 1, destinations.length - cardsToShow))}
-              disabled={startIndex >= destinations.length - cardsToShow}
-            >
-              <FaChevronRight />
-            </button>
+              <button
+                className={styles.arrowBtn}
+                onClick={() => setStartIndex(i => Math.min(i + 1, destinations.length - cardsToShow))}
+                disabled={startIndex >= destinations.length - cardsToShow}
+              >
+                <FaChevronRight />
+              </button>
+            </div>
           </div>
         </div>
       </section>
@@ -190,7 +171,6 @@ export default function Home() {
       <section className={overviewStyles.overviewSection}>
         <div className={overviewStyles.overviewContainer}>
           {[
-            { label: 'Locations', value: 6 },
             { label: 'Destinations', value: 367 },
             { label: 'Groups', value: 24 },
             { label: 'Instagram groups', value: 50 },
@@ -216,7 +196,9 @@ export default function Home() {
             <h2>Instagram Travel Groups</h2>
             <p>Discover top travel groups from Instagram for your next getaway</p>
           </div>
-          <button className={instaStyles.viewMoreBtn}>View More</button>
+          <Link href="/instagram-groups">
+            <button className={topTrip.viewMoreBtn}>View More</button>
+          </Link>
         </div>
 
         <div className={instaStyles.carousel}>
@@ -229,11 +211,6 @@ export default function Home() {
               <div className={instaStyles.card} key={index}>
                 <h3>{group.handle}</h3>
                 <p className={instaStyles.name}>{group.name}</p>
-                <div className={instaStyles.stats}>
-                  <p>👥 {group.followers} followers</p>
-                  <p>➡️ {group.following} following</p>
-                  <p>📸 {group.posts} posts</p>
-                </div>
               </div>
             ))}
           </div>
@@ -243,122 +220,12 @@ export default function Home() {
           </button>
         </div>
       </section>
-      
-      <section className={travGroup.travelGroupsSection}>
-        <div className={travGroup.headerContainer}>
-          <button className={travGroup.viewMoreBtn}>View More</button>
-          <div className={travGroup.header}>
-            <h2>Top Travel Groups</h2>
-            <p>Join the best groups for weekend adventures.</p>
-          </div>
-        </div>
 
-        <div className={travGroup.carousel}>
-          <button className={travGroup.arrowLeft} onClick={() => {
-            if (travelGroupsRef.current) {
-              travelGroupsRef.current.scrollBy({ left: -300, behavior: 'smooth' });
-            }
-          }}>
-            <FaChevronLeft />
-          </button>
-
-          <div className={travGroup.cardTrack} ref={travelGroupsRef}>
-            {travelGroups.map((group, index) => (
-              <div className={travGroup.card} key={index}>
-                <div className={travGroup.cardImage} style={{ backgroundImage: `url(${group.image})` }}>
-                  <div className={travGroup.cardOverlay}></div>
-                </div>
-                <div className={travGroup.cardContent}>
-                  <h3>{group.name}</h3>
-                  <p className={travGroup.location}>{group.location} · {group.trips}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <button className={travGroup.arrowRight} onClick={() => {
-            if (travelGroupsRef.current) {
-              travelGroupsRef.current.scrollBy({ left: 300, behavior: 'smooth' });
-            }
-          }}>
-            <FaChevronRight />
-          </button>
-        </div>
-      </section>
-      <section className={mustDest.travelGroupsSection}>
-        <div className={mustDest.headerContainer}>
-          <div className={mustDest.header}>
-            <h2>Must Visit Destinations</h2>
-            <p>Dreamy spots you won’t want to miss this weekend</p>
-          </div>
-          <button className={mustDest.viewMoreBtn}>View More</button>
-        </div>
-        
-        <div className={mustDest.carousel}>
-          <button 
-            className={mustDest.arrowLeft} 
-            onClick={() => {
-              const mustDestRef = document.querySelector(`.${mustDest.cardTrack}`);
-              if (mustDestRef) {
-                mustDestRef.scrollBy({ left: -300, behavior: 'smooth' });
-              }
-            }}
-          >
-            <FaChevronLeft />
-          </button>
-          
-          <div className={mustDest.cardTrack}>
-            {[
-              { name: 'Gokarna', trips: 29, groups: 15, locations: ['Hyderabad', 'Bangalore'], hasMore: true },
-              { name: 'Coorg', trips: 25, groups: 13, locations: ['Chennai', 'Hyderabad'], hasMore: true },
-              { name: 'Rishikesh', trips: 32, groups: 18, locations: ['Delhi', 'Mumbai'], hasMore: true },
-              { name: 'Munnar', trips: 21, groups: 11, locations: ['Kochi', 'Chennai'], hasMore: true },
-              { name: 'Leh Ladakh', trips: 35, groups: 19, locations: ['Delhi', 'Chandigarh'], hasMore: true }
-            ].map((destination, index) => (
-              <div className={mustDest.card} key={index}>
-                <div className={mustDest.cardHeader}>
-                  <h3>{destination.name}</h3>
-                  <div className={mustDest.stats}>
-                    <div className={mustDest.statItem}>
-                      <span className={mustDest.statIcon}><FaCalendarAlt /></span>
-                      <span className={mustDest.statValue}>{destination.trips}</span>
-                      <span className={mustDest.statLabel}>Trips</span>
-                    </div>
-                    <div className={mustDest.statItem}>
-                      <span className={mustDest.statIcon}><FaUsers /></span>
-                      <span className={mustDest.statValue}>{destination.groups}</span>
-                      <span className={mustDest.statLabel}>Groups</span>
-                    </div>
-                  </div>
-                </div>
-                <div className={mustDest.locations}>
-                  {destination.locations.map((location, i) => (
-                    <span key={i} className={mustDest.locationTag}>{location}</span>
-                  ))}
-                  {destination.hasMore && (
-                    <span className={mustDest.moreTag}>+{destination.locations.length - 1}</span>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-          
-          <button 
-            className={mustDest.arrowRight} 
-            onClick={() => {
-              const mustDestRef = document.querySelector(`.${mustDest.cardTrack}`);
-              if (mustDestRef) {
-                mustDestRef.scrollBy({ left: 300, behavior: 'smooth' });
-              }
-            }}
-          >
-            <FaChevronRight />
-          </button>
-        </div>
-      </section>
       <section className={topTrip.travelGroupsSection}>
         <div className={topTrip.headerContainer}>
-          <button className={topTrip.viewMoreBtn}>View More</button>
+          <Link href="/trip">
+            <button className={topTrip.viewMoreBtn}>View More</button>
+          </Link>
           <div className={topTrip.header}>
             <h2>Top Weekend Trips</h2>
             <p>Unmissable trips to make your weekend epic.</p>
@@ -381,6 +248,7 @@ export default function Home() {
           <div className={topTrip.cardTrack}>
             {[
               { 
+                id:1,
                 name: 'Kodachadri Trek Shivamogga From...',
                 image: '/images/kodachadri.png',
                 price: 4236,
@@ -390,6 +258,7 @@ export default function Home() {
                 discount: null
               },
               { 
+                id:2,
                 name: 'Nandi Hills Sunrise Trek',
                 image: '/images/nandi.png',
                 price: 349,
@@ -400,6 +269,7 @@ export default function Home() {
                 organizer: 'escape2explore'
               },
               { 
+                id:3,
                 name: 'Kumara Parvatha Trek',
                 image: '/images/kumara.png',
                 price: 2999,
@@ -410,6 +280,7 @@ export default function Home() {
                 organizer: 'TrekBuddy'
               },
               { 
+                id:4,
                 name: 'Coorg Coffee Estate Tour',
                 image: '/images/coorg.png',
                 price: 1899,
@@ -419,6 +290,7 @@ export default function Home() {
                 discount: null
               },
               { 
+                id:5,
                 name: 'Gokarna Beach Trek',
                 image: '/images/gokarna.png',
                 price: 2499,
@@ -429,36 +301,38 @@ export default function Home() {
                 organizer: 'BeachTreks'
               }
             ].map((trip, index) => (
-              <div className={topTrip.card} key={index}>
-                <div className={topTrip.cardImage} style={{ backgroundImage: `url(${trip.image})` }}>
-                  {trip.discount && <span className={topTrip.discountTag}>{trip.discount}</span>}
-                </div>
-                <div className={topTrip.cardContent}>
-                  <h3 className={topTrip.tripName}>{trip.name}</h3>
-                  
-                  <div className={topTrip.pricing}>
-                    <span className={topTrip.currentPrice}>₹ {trip.price}</span>
-                    {trip.originalPrice && <span className={topTrip.originalPrice}>₹ {trip.originalPrice}</span>}
+              <Link href={`/trips/${trip.id}`} key={index}>
+                <div className={topTrip.card}>
+                  <div className={topTrip.cardImage} style={{ backgroundImage: `url(${trip.image})` }}>
+                    {trip.discount && <span className={topTrip.discountTag}>{trip.discount}</span>}
                   </div>
-                  
-                  <div className={topTrip.tripInfo}>
-                    <div className={topTrip.infoItem}>
-                      <span className={topTrip.infoIcon}>⏱️</span>
-                      <span className={topTrip.infoText}>{trip.duration}</span>
+                  <div className={topTrip.cardContent}>
+                    <h3 className={topTrip.tripName}>{trip.name}</h3>
+                    
+                    <div className={topTrip.pricing}>
+                      <span className={topTrip.currentPrice}>₹ {trip.price}</span>
+                      {trip.originalPrice && <span className={topTrip.originalPrice}>₹ {trip.originalPrice}</span>}
                     </div>
                     
-                    <div className={topTrip.infoItem}>
-                      <span className={topTrip.infoIcon}>📍</span>
-                      <span className={topTrip.infoText}>{trip.location}</span>
-                    </div>
-                    
-                    <div className={topTrip.infoItem}>
-                      <span className={topTrip.infoIcon}>👤</span>
-                      <span className={topTrip.infoText}>{trip.organizer}</span>
+                    <div className={topTrip.tripInfo}>
+                      <div className={topTrip.infoItem}>
+                        <span className={topTrip.infoIcon}>⏱️</span>
+                        <span className={topTrip.infoText}>{trip.duration}</span>
+                      </div>
+                      
+                      <div className={topTrip.infoItem}>
+                        <span className={topTrip.infoIcon}>📍</span>
+                        <span className={topTrip.infoText}>{trip.location}</span>
+                      </div>
+                      
+                      <div className={topTrip.infoItem}>
+                        <span className={topTrip.infoIcon}>👤</span>
+                        <span className={topTrip.infoText}>{trip.organizer}</span>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
           
