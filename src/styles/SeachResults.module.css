@@ -1,0 +1,305 @@
+/* SearchResults.module.css */
+
+.searchResultsContainer {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  padding: 2rem 1rem;
+}
+
+.searchHeader {
+  max-width: 1200px;
+  margin: 0 auto 2rem;
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.searchInfo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.searchIcon {
+  font-size: 2rem;
+  color: #4f46e5;
+}
+
+.searchTitle {
+  font-size: 2rem;
+  color: #1f2937;
+  margin: 0 0 0.5rem 0;
+  font-weight: 700;
+}
+
+.resultCount {
+  color: #6b7280;
+  margin: 0;
+  font-size: 1rem;
+}
+
+.resultsContent {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Loading State */
+.loadingState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #f3f4f6;
+  border-top: 4px solid #4f46e5;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Error State */
+.errorState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4rem 2rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.errorMessage {
+  color: #dc2626;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+.retryButton {
+  background: #4f46e5;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.retryButton:hover {
+  background: #4338ca;
+}
+
+/* No Results State */
+.noResultsState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4rem 2rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.noResultsIcon {
+  font-size: 4rem;
+  color: #9ca3af;
+  margin-bottom: 1rem;
+}
+
+.noResultsState h3 {
+  font-size: 1.5rem;
+  color: #374151;
+  margin-bottom: 0.5rem;
+}
+
+.noResultsState p {
+  color: #6b7280;
+  margin-bottom: 1rem;
+}
+
+.suggestions {
+  text-align: left;
+  color: #6b7280;
+  margin-bottom: 2rem;
+}
+
+.suggestions li {
+  margin-bottom: 0.5rem;
+}
+
+.backHomeButton {
+  background: #4f46e5;
+  color: white;
+  text-decoration: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.backHomeButton:hover {
+  background: #4338ca;
+}
+
+/* Results Grid */
+.resultsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 2rem;
+}
+
+.tripCard {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  text-decoration: none;
+  color: inherit;
+}
+
+.tripCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+.tripImage {
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+}
+
+.tripImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.tripCard:hover .tripImage img {
+  transform: scale(1.05);
+}
+
+.tripContent {
+  padding: 1.5rem;
+}
+
+.tripName {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 0.75rem 0;
+  line-height: 1.4;
+}
+
+.tripName mark {
+  background-color: #fef3c7;
+  padding: 0 0.25rem;
+  border-radius: 4px;
+}
+
+.tripLocation {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #6b7280;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.tripLocation span mark {
+  background-color: #fef3c7;
+  padding: 0 0.25rem;
+  border-radius: 4px;
+}
+
+.tripDescription {
+  color: #4b5563;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+}
+
+.tripDetails {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.tripDetail {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+.tripPrice {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #059669;
+}
+
+.priceAmount {
+  color: #059669;
+}
+
+.priceLabel {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #6b7280;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .searchResultsContainer {
+    padding: 1rem 0.5rem;
+  }
+
+  .searchHeader {
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .searchTitle {
+    font-size: 1.5rem;
+  }
+
+  .searchInfo {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .resultsGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .tripCard {
+    margin: 0 0.5rem;
+  }
+
+  .tripDetails {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}

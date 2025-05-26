@@ -1,62 +1,71 @@
-// src/app/trips/[id]/page.js
 import TripDetails from '@/components/TripDetails';
 
-// Sample data fetching (replace with your actual data source)
 async function getTripData(id) {
-  // This is where you'd fetch data from your API
-  // In a real app, replace this with your actual data fetching logic
-  
-  // For now, using sample data
-  const tripData = {
-    id: parseInt(id),
-    name: "Nandi Hills Sunrise Trek",
-    location: "Nandi Village, Chikkaballapur",
-    rating: 4.7,
-    reviews: 153,
-    price: 349,
-    originalPrice: 498,
-    discount: "30% OFF",
-    duration: "1D / 1N",
-    category: "Sunrise Treks",
-    minAge: "5+",
-    taxInfo: "No Hidden Charges",
-    organizer: "escape2explore",
-    images: [
-      "/images/nandi.png",
-      "/images/nandi1.png",
-      "/images/nandi2.png",
-    ],
-    description: "Experience the breathtaking sunrise at Nandi Hills, one of the most popular weekend getaways from Bangalore. This early morning trek offers panoramic views of the surrounding landscapes covered in mist.",
-    highlights: [
-      "Witness spectacular sunrise views from 1,478m elevation",
-      "Trek through refreshing morning mist and clouds",
-      "Explore ancient temples and historical structures",
-      "Perfect for beginners and families with kids above 5 years",
-      "Guided experience with photography opportunities"
-    ],
-    inclusions: [
-      "Professional trek guide",
-      "Basic first aid",
-      "Entry fees",
-      "Breakfast"
-    ],
-    exclusions: [
-      "Transportation to and from Nandi Hills",
-      "Personal expenses",
-      "Any meals not mentioned",
-      "Insurance"
-    ]
-  };
-  
-  return tripData;
+  try {
+    const response = await fetch('https://travel-rozf.onrender.com/core/trips/');
+    if (!response.ok) {
+      throw new Error('Failed to fetch trips');
+    }
+    const allTrips = await response.json();
+
+    const currentTrip = allTrips.find(trip => trip.id === parseInt(id));
+    
+    if (!currentTrip) {
+      throw new Error('Trip not found');
+    }
+
+    const similarTrips = allTrips.filter(trip => 
+      trip.destination === currentTrip.destination && trip.id !== currentTrip.id
+    );
+
+    const rating = (Math.random() * 1 + 4).toFixed(1);
+    const reviews = Math.floor(Math.random() * 490) + 10;
+
+    const processedTrip = {
+      id: currentTrip.id,
+      name: currentTrip.trip_spot || 'Not Available',
+      location: currentTrip.destination || 'Not Available',
+      rating: parseFloat(rating),
+      reviews: reviews,
+      price: currentTrip.price || 'Not Available',
+      duration: currentTrip.duration || 'Not Available',
+      description: currentTrip.description || 'No description available',
+      images: currentTrip.trip_image?.map(img => img.image) || ['/images/default-trip.jpg'],
+      organizer: currentTrip.group_name || 'Not Available'
+    };
+
+     const comparisonData = similarTrips.map(trip => {
+      return {
+        organizer: trip.group_name || 'Unknown Organizer',
+        name: trip.trip_spot || 'Unknown Trip',
+        price: parseFloat(trip.price),
+        originalPrice: null
+      };
+    });
+
+    comparisonData.unshift({
+      organizer: currentTrip.group_name || 'Current Organizer',
+      name: currentTrip.trip_spot || 'Current Trip',
+      price: parseFloat(currentTrip.price),
+      originalPrice: null
+    });
+
+    return {
+      trip: processedTrip,
+      comparisonData: comparisonData
+    };
+  } catch (error) {
+    console.error('Error fetching trip data:', error);
+    throw error;
+  }
 }
 
 export default async function TripPage({ params }) {
-  const tripData = await getTripData(params.id);
+  const { trip, comparisonData } = await getTripData(params.id);
   
   return (
     <div>
-      <TripDetails trip={tripData} />
+      <TripDetails trip={trip} comparisonData={comparisonData} />
     </div>
   );
 }

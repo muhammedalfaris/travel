@@ -4,8 +4,6 @@ import Navbar from '@/components/Navbar';
 import styles from '@/styles/HeroSection.module.css';
 import overviewStyles from '@/styles/Overview.module.css';
 import instaStyles from '@/styles/InstaSection.module.css';
-import travGroup from '@/styles/TopTravelGroups.module.css';
-import mustDest from '@/styles/MustDest.module.css';
 import topTrip from '@/styles/TopTrips.module.css';
 import { useState, useEffect, useRef } from 'react';
 import { FaUsers, FaCalendarAlt, FaChevronLeft, FaChevronRight, FaWhatsapp } from 'react-icons/fa';
@@ -14,23 +12,122 @@ import SearchBar from '@/components/Searchbar';
 import Link from 'next/link';
 
 export default function Home() {
-  const destinations = [
-    { name: 'Pune', image: '/images/madhura.png', groups: 4, trips: 108 },
-    { name: 'Delhi', image: '/images/amalfi.png', groups: 3, trips: 71 },
-    { name: 'Mumbai', image: '/images/jaipur.png', groups: 2, trips: 101 },
-    { name: 'Goa', image: '/images/goa.png', groups: 5, trips: 120 },
-  ];
-
-  const [bgImage, setBgImage] = useState(destinations[0].image);
+  // State for API data
+  const [destinations, setDestinations] = useState([]);
+  const [instaGroups, setInstaGroups] = useState([]);
+  const [trips, setTrips] = useState([]);
+  const [overviewStats, setOverviewStats] = useState({
+    destinations: 0,
+    groups: 0,
+    instagramGroups: 0,
+    trips: 0
+  });
+  
+  // Existing state
+  const [bgImage, setBgImage] = useState('');
   const [startIndex, setStartIndex] = useState(0);
-
   const [isMobile, setIsMobile] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Fetch data from APIs
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        
+        // Fetch all APIs in parallel
+        const [destinationRes, instaRes, tripsRes] = await Promise.all([
+          fetch('https://travel-rozf.onrender.com/core/destination-info/'),
+          fetch('https://travel-rozf.onrender.com/core/instagram/'),
+          fetch('https://travel-rozf.onrender.com/core/trips/')
+        ]);
+
+        const destinationData = await destinationRes.json();
+        const instaData = await instaRes.json();
+        const tripsData = await tripsRes.json();
+
+        // Process destination data
+        const processedDestinations = Object.entries(destinationData).map(([name, data]) => {
+          const firstTripImage = data.trips[0]?.trip_image[0]?.image || '/images/default.png';
+          return {
+            name,
+            image: firstTripImage.startsWith('http') ? firstTripImage : `https://travel-rozf.onrender.com${firstTripImage}`,
+            groups: new Set(data.trips.map(trip => trip.group)).size, // Count unique groups
+            trips: data.trip_count
+          };
+        });
+
+        // Process Instagram data (first 6 only)
+        const processedInstaGroups = instaData.slice(0, 6).map(group => ({
+          handle: `@${group.username}`,
+          name: group.name,
+          url: group.url,
+          followers: 'N/A', // Not provided in API
+          following: 'N/A', // Not provided in API
+          posts: 'N/A', // Not provided in API
+        }));
+
+        // Process trips data (unique trips only, first 6)
+        const uniqueTrips = [];
+        const seenTripNames = new Set();
+        
+        for (const trip of tripsData) {
+          if (!seenTripNames.has(trip.trip_spot) && uniqueTrips.length < 6) {
+            seenTripNames.add(trip.trip_spot);
+            const firstImage = trip.trip_image[0]?.image || '/images/default.png';
+            uniqueTrips.push({
+              id: trip.id,
+              name: trip.trip_spot,
+              image: firstImage.startsWith('http') ? firstImage : `https://travel-rozf.onrender.com${firstImage}`,
+              price: parseFloat(trip.price),
+              duration: trip.duration,
+              location: trip.destination,
+              organizer: trip.group_name,
+              description: trip.description,
+              discount: null // Not provided in API
+            });
+          }
+        }
+
+        // Calculate overview stats
+        const totalGroups = new Set(tripsData.map(trip => trip.group)).size;
+        const overviewData = {
+          destinations: processedDestinations.length,
+          groups: totalGroups,
+          instagramGroups: instaData.length,
+          trips: tripsData.length
+        };
+
+        // Update state
+        setDestinations(processedDestinations);
+        setInstaGroups(processedInstaGroups);
+        setTrips(uniqueTrips);
+        setOverviewStats(overviewData);
+        
+        // Set initial background image
+        if (processedDestinations.length > 0) {
+          setBgImage(processedDestinations[0].image);
+        }
+
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        // Fallback to default data if API fails
+        setDestinations([
+          { name: 'Loading...', image: '/images/default.png', groups: 0, trips: 0 }
+        ]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
   }, []);
 
   const cardsToShow = isMobile ? 1 : 3;
@@ -55,7 +152,6 @@ export default function Home() {
   };
   
   const scrollRef = useRef(null);
-  const travelGroupsRef = useRef(null);
 
   const scrollLeft = () => {
     scrollRef.current.scrollBy({ left: -300, behavior: 'smooth' });
@@ -65,43 +161,13 @@ export default function Home() {
     scrollRef.current.scrollBy({ left: 300, behavior: 'smooth' });
   };
 
-  const instaGroups = [
-    {
-      handle: '@trippertrails',
-      name: 'Tripper Trails®',
-      followers: '95.5K',
-      following: '14',
-      posts: '819',
-    },
-    {
-      handle: '@trekhieversofficial',
-      name: 'Trekhievers - Your Adventure Mate',
-      followers: '65K',
-      following: '191',
-      posts: '2,401',
-    },
-    {
-      handle: '@trekhieversofficial',
-      name: 'Trekhievers - Your Adventure Mate',
-      followers: '65K',
-      following: '191',
-      posts: '2,401',
-    },
-    {
-      handle: '@trekhieversofficial',
-      name: 'Trekhievers - Your Adventure Mate',
-      followers: '65K',
-      following: '191',
-      posts: '2,401',
-    },
-    {
-      handle: '@trekhieversofficial',
-      name: 'Trekhievers - Your Adventure Mate',
-      followers: '65K',
-      following: '191',
-      posts: '2,401',
-    },
-  ];
+  if (loading) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <div>Loading...</div>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -171,10 +237,10 @@ export default function Home() {
       <section className={overviewStyles.overviewSection}>
         <div className={overviewStyles.overviewContainer}>
           {[
-            { label: 'Destinations', value: 367 },
-            { label: 'Groups', value: 24 },
-            { label: 'Instagram groups', value: 50 },
-            { label: 'Trips', value: 805 }
+            { label: 'Destinations', value: overviewStats.destinations },
+            { label: 'Groups', value: overviewStats.groups },
+            { label: 'Instagram groups', value: overviewStats.instagramGroups },
+            { label: 'Trips', value: overviewStats.trips }
           ].map((item, index, array) => (
             <div className={overviewStyles.overviewItem} key={index}>
               <div className={overviewStyles.overviewValue}><Counter end={item.value} /></div>
@@ -208,7 +274,12 @@ export default function Home() {
 
           <div className={instaStyles.cardTrack} ref={scrollRef}>
             {instaGroups.map((group, index) => (
-              <div className={instaStyles.card} key={index}>
+              <div 
+                className={instaStyles.card} 
+                key={index}
+                onClick={() => window.open(group.url, '_blank')}
+                style={{ cursor: 'pointer' }}
+              >
                 <h3>{group.handle}</h3>
                 <p className={instaStyles.name}>{group.name}</p>
               </div>
@@ -246,61 +317,7 @@ export default function Home() {
           </button>
           
           <div className={topTrip.cardTrack}>
-            {[
-              { 
-                id:1,
-                name: 'Kodachadri Trek Shivamogga From...',
-                image: '/images/kodachadri.png',
-                price: 4236,
-                duration: '2 days 1 night',
-                location: 'Bangalore',
-                organizer: 'Namma Trip',
-                discount: null
-              },
-              { 
-                id:2,
-                name: 'Nandi Hills Sunrise Trek',
-                image: '/images/nandi.png',
-                price: 349,
-                originalPrice: 498,
-                discount: '30% OFF',
-                duration: '1 day',
-                location: 'Bangalore',
-                organizer: 'escape2explore'
-              },
-              { 
-                id:3,
-                name: 'Kumara Parvatha Trek',
-                image: '/images/kumara.png',
-                price: 2999,
-                originalPrice: 3500,
-                discount: '15% OFF',
-                duration: '2 days',
-                location: 'Mangalore',
-                organizer: 'TrekBuddy'
-              },
-              { 
-                id:4,
-                name: 'Coorg Coffee Estate Tour',
-                image: '/images/coorg.png',
-                price: 1899,
-                duration: '1 day',
-                location: 'Coorg',
-                organizer: 'Nature Walks',
-                discount: null
-              },
-              { 
-                id:5,
-                name: 'Gokarna Beach Trek',
-                image: '/images/gokarna.png',
-                price: 2499,
-                originalPrice: 2999,
-                discount: '17% OFF',
-                duration: '2 days 1 night',
-                location: 'Gokarna',
-                organizer: 'BeachTreks'
-              }
-            ].map((trip, index) => (
+            {trips.map((trip, index) => (
               <Link href={`/trips/${trip.id}`} key={index}>
                 <div className={topTrip.card}>
                   <div className={topTrip.cardImage} style={{ backgroundImage: `url(${trip.image})` }}>
@@ -311,7 +328,6 @@ export default function Home() {
                     
                     <div className={topTrip.pricing}>
                       <span className={topTrip.currentPrice}>₹ {trip.price}</span>
-                      {trip.originalPrice && <span className={topTrip.originalPrice}>₹ {trip.originalPrice}</span>}
                     </div>
                     
                     <div className={topTrip.tripInfo}>

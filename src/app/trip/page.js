@@ -3,69 +3,82 @@ import styles from '@/styles/TripPage.module.css';
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import { useEffect, useState } from 'react';
 
 export default function TripsPage() {
-  const trips = [
-    { 
-      id: 1,
-      name: 'Kodachadri Trek Shivamogga From...',
-      image: '/images/kodachadri.png',
-      price: 4236,
-      duration: '2 days 1 night',
-      location: 'Bangalore',
-      organizer: 'Namma Trip',
-      discount: null
-    },
-    { 
-      id: 2,
-      name: 'Nandi Hills Sunrise Trek',
-      image: '/images/nandi.png',
-      price: 349,
-      originalPrice: 498,
-      discount: '30% OFF',
-      duration: '1 day',
-      location: 'Bangalore',
-      organizer: 'escape2explore'
-    },
-    { 
-      id: 3,
-      name: 'Kumara Parvatha Trek',
-      image: '/images/kumara.png',
-      price: 2999,
-      originalPrice: 3500,
-      discount: '15% OFF',
-      duration: '2 days',
-      location: 'Mangalore',
-      organizer: 'TrekBuddy'
-    },
-    { 
-      id: 4,
-      name: 'Coorg Coffee Estate Tour',
-      image: '/images/coorg.png',
-      price: 1899,
-      duration: '1 day',
-      location: 'Coorg',
-      organizer: 'Nature Walks',
-      discount: null
-    },
-    { 
-      id: 5,
-      name: 'Gokarna Beach Trek',
-      image: '/images/gokarna.png',
-      price: 2499,
-      originalPrice: 2999,
-      discount: '17% OFF',
-      duration: '2 days 1 night',
-      location: 'Gokarna',
-      organizer: 'BeachTreks'
-    }
-  ];
+  const [trips, setTrips] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchTrips = async () => {
+      try {
+        const response = await fetch('https://travel-rozf.onrender.com/core/trips/');
+        if (!response.ok) {
+          throw new Error('Failed to fetch trips');
+        }
+        const data = await response.json();
+
+        const processedTrips = data.map(trip => {
+          const hasDiscount = Math.random() < 0.3;
+          let discountData = null;
+          
+          if (hasDiscount) {
+            const discountPercent = Math.floor(Math.random() * 30) + 10; 
+            const originalPrice = parseFloat(trip.price) * (1 + discountPercent/100);
+            discountData = {
+              discount: `${discountPercent}% OFF`,
+              originalPrice: originalPrice.toFixed(2)
+            };
+          }
+          
+          return {
+            id: trip.id,
+            name: trip.trip_spot || 'Not Available',
+            image: trip.trip_image?.[0]?.image || '/images/default-trip.jpg',
+            price: trip.price || 'Not Available',
+            duration: trip.duration || 'Not Available',
+            location: trip.destination || 'Not Available',
+            organizer: trip.group_name || 'Not Available',
+            ...discountData
+          };
+        });
+        
+        setTrips(processedTrips);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    fetchTrips();
+  }, []);
+
+  if (loading) {
+    return (
+      <>
+        <Navbar />
+        <div className={styles.loading}>Loading trips...</div>
+        <Footer />
+      </>
+    );
+  }
+
+  if (error) {
+    return (
+      <>
+        <Navbar />
+        <div className={styles.error}>Error: {error}</div>
+        <Footer />
+      </>
+    );
+  }
 
   return (
     <>
       <Navbar />
       <section className={styles.travelGroupsSection}>
-
         <div className={styles.tripsGrid}>
           {trips.map((trip, index) => (
             <Link href={`/trips/${trip.id}`} key={index}>
@@ -77,8 +90,14 @@ export default function TripsPage() {
                   <h3 className={styles.tripName}>{trip.name}</h3>
                   
                   <div className={styles.pricing}>
-                    <span className={styles.currentPrice}>₹ {trip.price}</span>
-                    {trip.originalPrice && <span className={styles.originalPrice}>₹ {trip.originalPrice}</span>}
+                    {trip.price !== 'Not Available' ? (
+                      <>
+                        <span className={styles.currentPrice}>₹ {trip.price}</span>
+                        {trip.originalPrice && <span className={styles.originalPrice}>₹ {trip.originalPrice}</span>}
+                      </>
+                    ) : (
+                      <span className={styles.currentPrice}>Price Not Available</span>
+                    )}
                   </div>
                   
                   <div className={styles.tripInfo}>

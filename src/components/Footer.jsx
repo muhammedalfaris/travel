@@ -58,7 +58,7 @@ const Footer = () => {
             <ul>
               <li>+91 90302 63255</li>
               <li>info@travellersdost.com</li>
-              <li>1234 Somewhere Rd.<br />New York, NY 12345, USA</li>
+              <li>3rd Floor, Plot, No. 11-14-518/2, Siris Rd, above HP Gas – Samantha Shiva Sakthi Enterprises, Snehapuri Colony, L. B. Nagar, Hyderabad, Telangana 500074</li>
             </ul>
           </div>
 
