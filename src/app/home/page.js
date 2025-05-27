@@ -58,7 +58,7 @@ export default function Home() {
           const firstTripImage = data.trips[0]?.trip_image[0]?.image || '/images/default.png';
           return {
             name,
-            image: firstTripImage.startsWith('http') ? firstTripImage : `https://travel-rozf.onrender.com${firstTripImage}`,
+            image: firstTripImage.startsWith('http') ? firstTripImage : `https://res.cloudinary.com/dbkj0h2sh/${firstTripImage}`,
             groups: new Set(data.trips.map(trip => trip.group)).size, // Count unique groups
             trips: data.trip_count
           };
@@ -85,7 +85,7 @@ export default function Home() {
             uniqueTrips.push({
               id: trip.id,
               name: trip.trip_spot,
-              image: firstImage.startsWith('http') ? firstImage : `https://travel-rozf.onrender.com${firstImage}`,
+              image: firstImage.startsWith('http') ? firstImage : `https://res.cloudinary.com/dbkj0h2sh/${firstImage}`,
               price: parseFloat(trip.price),
               duration: trip.duration,
               location: trip.destination,
@@ -113,7 +113,8 @@ export default function Home() {
         
         // Set initial background image
         if (processedDestinations.length > 0) {
-          setBgImage(processedDestinations[0].image);
+          const firstImage = processedDestinations[0].image;
+          setBgImage(firstImage.startsWith('http') ? firstImage : `https://res.cloudinary.com/dbkj0h2sh/${firstImage}`);
         }
 
       } catch (error) {

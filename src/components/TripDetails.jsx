@@ -7,6 +7,13 @@ import styles from '../styles/TripDetails.module.css';
 const TripDetails = ({ trip, comparisonData }) => {
   const [activeTab, setActiveTab] = useState('table');
 
+  // Function to properly format image URLs
+  const formatImageUrl = (imagePath) => {
+    if (!imagePath) return '/images/default.png';
+    if (imagePath.startsWith('http')) return imagePath;
+    return `https://res.cloudinary.com/dbkj0h2sh/${imagePath}`;
+  };
+
   const renderStars = (rating) => {
     const stars = [];
     const fullStars = Math.floor(rating);
@@ -27,14 +34,23 @@ const TripDetails = ({ trip, comparisonData }) => {
   return (
     <div className={styles.container}>
       <div className={styles.heroSection}>
-        <div className={styles.heroMainImage} style={{backgroundImage: `url(${trip.images[0]})`}}>
+        <div 
+          className={styles.heroMainImage} 
+          style={{backgroundImage: `url(${formatImageUrl(trip.images[0])})`}}
+        >
           <div className={styles.breadcrumbs}>
             <Link href="/">Home</Link> &gt; <Link href="/weekend-trips">Weekend Trips</Link> &gt; <span>{trip.name}</span>
           </div>
         </div>
         <div className={styles.heroSideImages}>
-          <div className={styles.sideImage} style={{backgroundImage: `url(${trip.images[1] || trip.images[0]})`}}></div>
-          <div className={styles.sideImage} style={{backgroundImage: `url(${trip.images[2] || trip.images[0]})`}}></div>
+          <div 
+            className={styles.sideImage} 
+            style={{backgroundImage: `url(${formatImageUrl(trip.images[1] || trip.images[0])})`}}
+          ></div>
+          <div 
+            className={styles.sideImage} 
+            style={{backgroundImage: `url(${formatImageUrl(trip.images[2] || trip.images[0])})`}}
+          ></div>
         </div>
       </div>
 

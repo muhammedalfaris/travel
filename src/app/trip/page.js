@@ -10,6 +10,13 @@ export default function TripsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // Function to properly format image URLs
+  const formatImageUrl = (imagePath) => {
+    if (!imagePath) return '/images/default-trip.jpg';
+    if (imagePath.startsWith('http')) return imagePath;
+    return `https://res.cloudinary.com/dbkj0h2sh/${imagePath}`;
+  };
+
   useEffect(() => {
     const fetchTrips = async () => {
       try {
@@ -35,7 +42,7 @@ export default function TripsPage() {
           return {
             id: trip.id,
             name: trip.trip_spot || 'Not Available',
-            image: trip.trip_image?.[0]?.image || '/images/default-trip.jpg',
+            image: formatImageUrl(trip.trip_image?.[0]?.image),
             price: trip.price || 'Not Available',
             duration: trip.duration || 'Not Available',
             location: trip.destination || 'Not Available',
@@ -83,7 +90,10 @@ export default function TripsPage() {
           {trips.map((trip, index) => (
             <Link href={`/trips/${trip.id}`} key={index}>
               <div className={styles.card}>
-                <div className={styles.cardImage} style={{ backgroundImage: `url(${trip.image})` }}>
+                <div 
+                  className={styles.cardImage} 
+                  style={{ backgroundImage: `url(${trip.image})` }}
+                >
                   {trip.discount && <span className={styles.discountTag}>{trip.discount}</span>}
                 </div>
                 <div className={styles.cardContent}>
