@@ -16,7 +16,6 @@ const SearchBar = () => {
   const searchTimeoutRef = useRef(null);
   const dropdownRef = useRef(null);
 
-  // Fetch search results from API
   const fetchSearchResults = async (searchTerm) => {
     if (!searchTerm.trim()) {
       setSearchResults([]);

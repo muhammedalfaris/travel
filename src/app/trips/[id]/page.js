@@ -61,7 +61,6 @@ async function getTripData(id) {
 }
 
 export default async function TripPage({ params }) {
-  // Await params before accessing its properties
   const resolvedParams = await params;
   const { trip, comparisonData } = await getTripData(resolvedParams.id);
   
