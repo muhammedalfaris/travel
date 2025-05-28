@@ -8,7 +8,7 @@ import topTrip from '@/styles/TopTrips.module.css';
 import { useState, useEffect, useRef } from 'react';
 import { FaUsers, FaCalendarAlt, FaChevronLeft, FaChevronRight, FaWhatsapp } from 'react-icons/fa';
 import Footer from '@/components/Footer';
-import SearchBar from '@/components/Searchbar';
+import SearchBar from '@/components/SearchBar';
 import Link from 'next/link';
 
 export default function Home() {
