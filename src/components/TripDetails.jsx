@@ -31,6 +31,16 @@ const TripDetails = ({ trip, comparisonData }) => {
     return stars;
   };
 
+  // Function to handle row/card click
+  const handleTripClick = (url) => {
+    if (url && url !== '#') {
+      window.open(url, '_blank');
+    }
+  };
+
+  // Check if any trip has group_priority true to show recommended badge
+  const hasRecommendedTrip = comparisonData && comparisonData.some(option => option.isRecommended);
+
   return (
     <div className={styles.container}>
       <div className={styles.heroSection}>
@@ -129,8 +139,20 @@ const TripDetails = ({ trip, comparisonData }) => {
                     </thead>
                     <tbody>
                       {comparisonData.map((option, index) => (
-                        <tr key={index} className={index === 0 ? styles.highlightedRow : ''}>
-                          <td>{option.organizer}</td>
+                        <tr 
+                          key={index} 
+                          className={`${hasRecommendedTrip && option.isRecommended ? styles.highlightedRow : ''} ${styles.clickableRow}`}
+                          onClick={() => handleTripClick(option.url)}
+                          style={{ cursor: option.url && option.url !== '#' ? 'pointer' : 'default' }}
+                        >
+                          <td>
+                            <div className={styles.providerCell}>
+                              {option.organizer}
+                              {hasRecommendedTrip && option.isRecommended && (
+                                <span className={styles.recommendedBadge}>Recommended</span>
+                              )}
+                            </div>
+                          </td>
                           <td>{option.name}</td>
                           <td>
                             <div className={styles.priceCell}>
@@ -148,10 +170,12 @@ const TripDetails = ({ trip, comparisonData }) => {
               ) : (
                 <div className={styles.comparisonCards}>
                   {comparisonData.map((option, index) => (
-                    <div key={index} className={`${styles.comparisonCard} ${index === 0 ? styles.highlightedCard : ''}`}>
+                    <div key={index} className={`${styles.comparisonCard} ${hasRecommendedTrip && option.isRecommended ? styles.highlightedCard : ''}`}>
                       <div className={styles.cardHeader}>
                         <h3>{option.organizer}</h3>
-                        {index === 0 && <span className={styles.recommendedBadge}>Recommended</span>}
+                        {hasRecommendedTrip && option.isRecommended && (
+                          <span className={styles.recommendedBadge}>Recommended</span>
+                        )}
                       </div>
                       <h4>{option.name}</h4>
                       <div className={styles.cardPrice}>
@@ -160,9 +184,12 @@ const TripDetails = ({ trip, comparisonData }) => {
                           <span className={styles.originalPrice}>₹{option.originalPrice}</span>
                         )}
                       </div>
-                      {index === 0 && (
-                        <button className={styles.selectButton}>Select This Trip</button>
-                      )}
+                      <button 
+                        className={styles.selectButton}
+                        onClick={() => handleTripClick(option.url)}
+                      >
+                        Select This Trip
+                      </button>
                     </div>
                   ))}
                 </div>

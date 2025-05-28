@@ -36,6 +36,16 @@ export default function Home() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // Helper function to shuffle array
+  const shuffleArray = (array) => {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+  };
+
   // Fetch data from APIs
   useEffect(() => {
     const fetchData = async () => {
@@ -53,33 +63,44 @@ export default function Home() {
         const instaData = await instaRes.json();
         const tripsData = await tripsRes.json();
 
-        // Process destination data
-        const processedDestinations = Object.entries(destinationData).map(([name, data]) => {
+        // Process destination data with priority logic
+        const allDestinations = Object.entries(destinationData).map(([name, data]) => {
           const firstTripImage = data.trips[0]?.trip_image[0]?.image || '/images/default.png';
           return {
             name,
             image: firstTripImage.startsWith('http') ? firstTripImage : `https://res.cloudinary.com/dbkj0h2sh/${firstTripImage}`,
-            groups: new Set(data.trips.map(trip => trip.group)).size, // Count unique groups
-            trips: data.trip_count
+            groups: new Set(data.trips.map(trip => trip.group)).size, 
+            trips: data.trip_count,
+            destination_priority: data.trips.some(trip => trip.destination_priority) // Check if any trip has destination_priority
           };
         });
 
-        // Process Instagram data (first 6 only)
-        const processedInstaGroups = instaData.slice(0, 6).map(group => ({
+        // Sort destinations: priority first, then random
+        const priorityDestinations = allDestinations.filter(dest => dest.destination_priority);
+        const nonPriorityDestinations = shuffleArray(allDestinations.filter(dest => !dest.destination_priority));
+        const processedDestinations = [...priorityDestinations, ...nonPriorityDestinations];
+
+        // Process Instagram groups with priority logic
+        const priorityInstaGroups = instaData.filter(group => group.group_priority);
+        const nonPriorityInstaGroups = shuffleArray(instaData.filter(group => !group.group_priority));
+        const sortedInstaGroups = [...priorityInstaGroups, ...nonPriorityInstaGroups];
+        
+        const processedInstaGroups = sortedInstaGroups.slice(0, 12).map(group => ({
           handle: `@${group.username}`,
           name: group.name,
           url: group.url,
-          followers: 'N/A', // Not provided in API
-          following: 'N/A', // Not provided in API
-          posts: 'N/A', // Not provided in API
         }));
 
-        // Process trips data (unique trips only, first 6)
+        // Process trips with priority logic
+        const priorityTrips = tripsData.filter(trip => trip.trip_priority);
+        const nonPriorityTrips = shuffleArray(tripsData.filter(trip => !trip.trip_priority));
+        const sortedTrips = [...priorityTrips, ...nonPriorityTrips];
+
         const uniqueTrips = [];
         const seenTripNames = new Set();
         
-        for (const trip of tripsData) {
-          if (!seenTripNames.has(trip.trip_spot) && uniqueTrips.length < 6) {
+        for (const trip of sortedTrips) {
+          if (!seenTripNames.has(trip.trip_spot) && uniqueTrips.length < 12) {
             seenTripNames.add(trip.trip_spot);
             const firstImage = trip.trip_image[0]?.image || '/images/default.png';
             uniqueTrips.push({

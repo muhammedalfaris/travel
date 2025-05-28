@@ -34,20 +34,26 @@ async function getTripData(id) {
       organizer: currentTrip.group_name || 'Not Available'
     };
 
-     const comparisonData = similarTrips.map(trip => {
+    // Updated comparison data to include URL and group_priority
+    const comparisonData = similarTrips.map(trip => {
       return {
         organizer: trip.group_name || 'Unknown Organizer',
         name: trip.trip_spot || 'Unknown Trip',
         price: parseFloat(trip.price),
-        originalPrice: null
+        originalPrice: null,
+        url: trip.url || '#',
+        isRecommended: trip.group_priority || false
       };
     });
 
+    // Add current trip to comparison data
     comparisonData.unshift({
       organizer: currentTrip.group_name || 'Current Organizer',
       name: currentTrip.trip_spot || 'Current Trip',
       price: parseFloat(currentTrip.price),
-      originalPrice: null
+      originalPrice: null,
+      url: currentTrip.url || '#',
+      isRecommended: currentTrip.group_priority || false
     });
 
     return {
