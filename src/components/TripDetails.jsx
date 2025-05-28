@@ -14,6 +14,21 @@ const TripDetails = ({ trip, comparisonData }) => {
     return `https://res.cloudinary.com/dbkj0h2sh/${imagePath}`;
   };
 
+  // Function to format description with line breaks after full stops
+  const formatDescription = (description) => {
+    if (!description) return '';
+    
+    // Split by full stops and filter out empty strings
+    const sentences = description.split('.').filter(sentence => sentence.trim().length > 0);
+    
+    return sentences.map((sentence, index) => (
+      <React.Fragment key={index}>
+        {sentence.trim()}.
+        {index < sentences.length - 1 && <br />}
+      </React.Fragment>
+    ));
+  };
+
   const renderStars = (rating) => {
     const stars = [];
     const fullStars = Math.floor(rating);
@@ -102,7 +117,9 @@ const TripDetails = ({ trip, comparisonData }) => {
 
           <section className={styles.descriptionSection}>
             <h2 className={styles.sectionTitle}>About This Trip</h2>
-            <p className={styles.description}>{trip.description}</p>
+            <p className={styles.description}>
+              {formatDescription(trip.description)}
+            </p>
           </section>
 
           {comparisonData && comparisonData.length > 0 && (

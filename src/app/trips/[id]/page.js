@@ -1,3 +1,4 @@
+import Navbar from '@/components/Navbar';
 import TripDetails from '@/components/TripDetails';
 
 async function getTripData(id) {
@@ -72,6 +73,7 @@ export default async function TripPage({ params }) {
   
   return (
     <div>
+      <Navbar/>
       <TripDetails trip={trip} comparisonData={comparisonData} />
     </div>
   );
